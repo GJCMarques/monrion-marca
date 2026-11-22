@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MONRION — DaFont Serif (35 Páginas)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f5f5f5;
+      color: #111;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button, select {
+      background: #fff;
+      color: #111;
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    button:hover:not(:disabled) {
+      border-color: #111;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .info {
+      font-size: 13px;
+      color: #555;
+    }
+    main {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px 60px;
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      display: block;
+      margin: 0 auto;
+    }
+    .bottom-nav {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <a href="./index.html" style="text-decoration:none; color:#111; border:1px solid #ccc; padding:6px 12px; font-size:13px;">← Voltar</a>
+      <button id="prevTop">← Anterior</button>
+      <select id="pageSelect"></select>
+      <button id="nextTop">Seguinte →</button>
+    </div>
+    <div class="info" id="pageInfo">Página 1 de 35</div>
+  </header>
+
+  <main>
+    <img id="pageImg" src="./dafont-monrion/page_01.png" alt="DaFont MONRION Página 1" />
+    <div class="bottom-nav">
+      <button id="prevBot">← Anterior</button>
+      <button id="nextBot">Seguinte →</button>
+    </div>
+  </main>
+
+  <script>
+    const total = 35;
+    let current = 1;
+
+    const select = document.getElementById('pageSelect');
+    const img = document.getElementById('pageImg');
+    const info = document.getElementById('pageInfo');
+    const prevTop = document.getElementById('prevTop');
+    const nextTop = document.getElementById('nextTop');
+    const prevBot = document.getElementById('prevBot');
+    const nextBot = document.getElementById('nextBot');
+
+    for (let i = 1; i <= total; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = `Página ${i}`;
+      select.appendChild(opt);
+    }
+
+    function render(page) {
+      current = Math.max(1, Math.min(total, page));
+      const pad = String(current).padStart(2, '0');
+      img.src = `./dafont-monrion/page_${pad}.png`;
+      img.alt = `DaFont MONRION Página ${current}`;
+      select.value = current;
+      info.textContent = `Página ${current} de ${total}`;
+      prevTop.disabled = prevBot.disabled = current === 1;
+      nextTop.disabled = nextBot.disabled = current === total;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    select.addEventListener('change', (e) => render(Number(e.target.value)));
+    prevTop.addEventListener('click', () => render(current - 1));
+    prevBot.addEventListener('click', () => render(current - 1));
+    nextTop.addEventListener('click', () => render(current + 1));
+    nextBot.addEventListener('click', () => render(current + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') render(current - 1);
+      if (e.key === 'ArrowRight') render(current + 1);
+    });
+
+    render(1);
+  </script>
+</body>
+</html>

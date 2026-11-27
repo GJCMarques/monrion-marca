@@ -1,0 +1,503 @@
+@font-face {
+  font-family: 'Jost 100 Hairline';
+  src: url('./sans-serif/Jost/OpenType/Jost-100-Hairline.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 100 HairlineItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-100-HairlineItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 200 Thin';
+  src: url('./sans-serif/Jost/OpenType/Jost-200-Thin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 200 ThinItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-200-ThinItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 300 Light';
+  src: url('./sans-serif/Jost/OpenType/Jost-300-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 300 LightItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-300-LightItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 400 Book';
+  src: url('./sans-serif/Jost/OpenType/Jost-400-Book.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 400 BookItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-400-BookItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 500 Medium';
+  src: url('./sans-serif/Jost/OpenType/Jost-500-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 500 MediumItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-500-MediumItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 600 Semi';
+  src: url('./sans-serif/Jost/OpenType/Jost-600-Semi.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 600 SemiItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-600-SemiItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 700 Bold';
+  src: url('./sans-serif/Jost/OpenType/Jost-700-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 700 BoldItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-700-BoldItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 800 Hevy';
+  src: url('./sans-serif/Jost/OpenType/Jost-800-Hevy.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 800 HevyItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-800-HevyItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 900 Black';
+  src: url('./sans-serif/Jost/OpenType/Jost-900-Black.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 900 BlackItalic';
+  src: url('./sans-serif/Jost/OpenType/Jost-900-BlackItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 800 Heavy';
+  src: url('./sans-serif/Jost/TrueType/Jost-800-Heavy.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Jost 800 HeavyItalic';
+  src: url('./sans-serif/Jost/TrueType/Jost-800-HeavyItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Coconat Bold';
+  src: url('./sans-serif/coconat-main/fonts/Coconat-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Coconat Demi';
+  src: url('./sans-serif/coconat-main/fonts/Coconat-Demi.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Coconat Regular';
+  src: url('./sans-serif/coconat-main/fonts/Coconat-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DOF Afield Italic';
+  src: url('./sans-serif/dof/DOF-Afield-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DOF Afield Regular';
+  src: url('./sans-serif/dof/DOF-Afield-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 1 ext';
+  src: url('./sans-serif/dof/dof-1-ext.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 1 it';
+  src: url('./sans-serif/dof/dof-1-it.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 1 reg';
+  src: url('./sans-serif/dof/dof-1-reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 2 ext';
+  src: url('./sans-serif/dof/dof-2-ext.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 2 it';
+  src: url('./sans-serif/dof/dof-2-it.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 2 reg';
+  src: url('./sans-serif/dof/dof-2-reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 3 ext';
+  src: url('./sans-serif/dof/dof-3-ext.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 3 it';
+  src: url('./sans-serif/dof/dof-3-it.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof 3 reg';
+  src: url('./sans-serif/dof/dof-3-reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof afield it';
+  src: url('./sans-serif/dof/dof-afield-it.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'dof afield reg';
+  src: url('./sans-serif/dof/dof-afield-reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Existence Light';
+  src: url('./sans-serif/existence-light/Existence-Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Existence StencilLight';
+  src: url('./sans-serif/existence-light/Existence-StencilLight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Existence UnicaseLight';
+  src: url('./sans-serif/existence-light/Existence-UnicaseLight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Godber Regular';
+  src: url('./sans-serif/godber/Godber-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBlack';
+  src: url('./sans-serif/intro-black/IntroBlack.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBlackInline';
+  src: url('./sans-serif/intro-black/IntroBlackInline.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBlackItalic';
+  src: url('./sans-serif/intro-black/IntroBlackItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBold';
+  src: url('./sans-serif/intro-black/IntroBold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBoldItalic';
+  src: url('./sans-serif/intro-black/IntroBoldItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBook';
+  src: url('./sans-serif/intro-black/IntroBook.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroBookItalic';
+  src: url('./sans-serif/intro-black/IntroBookItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroLight';
+  src: url('./sans-serif/intro-black/IntroLight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroLightItalic';
+  src: url('./sans-serif/intro-black/IntroLightItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroRegular';
+  src: url('./sans-serif/intro-black/IntroRegular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroRegularItalic';
+  src: url('./sans-serif/intro-black/IntroRegularItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroThin';
+  src: url('./sans-serif/intro-black/IntroThin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IntroThinItalic';
+  src: url('./sans-serif/intro-black/IntroThinItalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilk';
+  src: url('./sans-serif/lemonmilk/LemonMilk.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilkbold';
+  src: url('./sans-serif/lemonmilk/LemonMilkbold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilkbolditalic';
+  src: url('./sans-serif/lemonmilk/LemonMilkbolditalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilkitalic';
+  src: url('./sans-serif/lemonmilk/LemonMilkitalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilklight';
+  src: url('./sans-serif/lemonmilk/LemonMilklight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LemonMilklightitalic';
+  src: url('./sans-serif/lemonmilk/LemonMilklightitalic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SIFONN PRO';
+  src: url('./sans-serif/sifonn/SIFONN_PRO.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LTSoul Bold';
+  src: url('./serif/LTSoul-V2/LTSoul-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LTSoul Medium';
+  src: url('./serif/LTSoul-V2/LTSoul-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LTSoul Regular';
+  src: url('./serif/LTSoul-V2/LTSoul-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LTSoul SemiBold';
+  src: url('./serif/LTSoul-V2/LTSoul-SemiBold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Isenheim Fin';
+  src: url('./serif/isenheim-main/fonts/OpenType-PS/Isenheim_Fin.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Isenheim Regulier';
+  src: url('./serif/isenheim-main/fonts/OpenType-PS/Isenheim_Regulier.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tenderness Regular';
+  src: url('./serif/tenderness_0601/Tenderness-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ecrou Regular';
+  src: url('./serif/écrou_Regular/ecrou-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Antrovectra DOLWD';
+  src: url('./script/antro-vectra/Antrovectra-DOLWD.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AntrovectraBolder ALGPp';
+  src: url('./script/antro-vectra/AntrovectraBolder-ALGPp.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Biloxi Script';
+  src: url('./script/biloxi-script/Biloxi Script.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Zapfino';
+  src: url('./script/zapfino/Zapfino.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

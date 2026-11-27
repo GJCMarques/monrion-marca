@@ -9,7 +9,14 @@
     <style>
         @font-face {
             font-family: 'Godber';
-            src: url('./godber/Godber-Regular.ttf') format('truetype');
+            src: url('./handpickedfonts/godber/Godber-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Sifonn Pro';
+            src: url('./handpickedfonts/sifonn/SIFONN_PRO.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
@@ -367,10 +374,20 @@
             <label>
                 Heading
                 <select id="headingSelect">
-                    <optgroup label="Sans">
+                    <optgroup label="Handpicked">
+                        <option value="'Sifonn Pro', sans-serif">Sifonn Pro</option>
+                        <option value="'Godber', sans-serif">Godber</option>
+                    </optgroup>
+                    <optgroup label="Sans-Serif">
                         <option value="'Outfit', sans-serif" selected>Outfit</option>
                         <option value="'Questrial', sans-serif">Questrial</option>
                         <option value="'Poppins', sans-serif">Poppins</option>
+                        <option value="'Josefin Sans', sans-serif">Josefin Sans</option>
+                        <option value="'Montserrat', sans-serif">Montserrat (Gotham)</option>
+                        <option value="'Raleway', sans-serif">Raleway</option>
+                        <option value="'Public Sans', sans-serif">Public Sans</option>
+                        <option value="'Inter', sans-serif">Inter</option>
+                        <option value="'Lato', sans-serif">Lato</option>
                     </optgroup>
                     <optgroup label="Serif">
                         <option value="'The Seasons', serif">The Seasons</option>
@@ -379,7 +396,6 @@
                         <option value="'Cinzel', serif">Cinzel</option>
                         <option value="'Lora', serif">Lora</option>
                         <option value="'Italiana', serif">Italiana</option>
-                        <option value="'Fraunces', serif">Fraunces</option>
                     </optgroup>
                 </select>
             </label>
@@ -387,17 +403,28 @@
             <label>
                 Body
                 <select id="bodySelect">
-                    <optgroup label="Sans">
+                    <optgroup label="Handpicked">
+                        <option value="'Sifonn Pro', sans-serif">Sifonn Pro</option>
+                        <option value="'Godber', sans-serif">Godber</option>
+                    </optgroup>
+                    <optgroup label="Sans-Serif">
+                        <option value="'Outfit', sans-serif">Outfit</option>
+                        <option value="'Questrial', sans-serif">Questrial</option>
+                        <option value="'Poppins', sans-serif">Poppins</option>
                         <option value="'Josefin Sans', sans-serif" selected>Josefin Sans</option>
                         <option value="'Montserrat', sans-serif">Montserrat (Gotham)</option>
                         <option value="'Raleway', sans-serif">Raleway</option>
                         <option value="'Public Sans', sans-serif">Public Sans</option>
-                        <option value="'Lato', sans-serif">Lato</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
                         <option value="'Inter', sans-serif">Inter</option>
+                        <option value="'Lato', sans-serif">Lato</option>
                     </optgroup>
                     <optgroup label="Serif">
+                        <option value="'The Seasons', serif">The Seasons</option>
+                        <option value="'Playfair Display', serif">Playfair Display</option>
+                        <option value="'Prata', serif">Prata</option>
+                        <option value="'Cinzel', serif">Cinzel</option>
                         <option value="'Lora', serif">Lora</option>
+                        <option value="'Italiana', serif">Italiana</option>
                     </optgroup>
                 </select>
             </label>
@@ -428,7 +455,6 @@
             <button data-layout="editorial">Editorial</button>
             <button data-layout="services">Serviços</button>
             <button id="viewBtn">Ver Todas</button>
-            <a href="./dafont-viewer.html" style="text-decoration:none; color:var(--text); border:1px solid var(--line); padding:5px 10px; font-size:12px;">DaFont (35 pág.)</a>
             <button id="themeBtn">Preto / Branco</button>
         </div>
     </header>
@@ -556,6 +582,8 @@
         });
 
         const allFonts = [
+            { name: 'Sifonn Pro (Handpicked)', css: "'Sifonn Pro', sans-serif" },
+            { name: 'Godber (Handpicked)', css: "'Godber', sans-serif" },
             { name: 'Outfit', css: "'Outfit', sans-serif" },
             { name: 'Questrial', css: "'Questrial', sans-serif" },
             { name: 'Poppins', css: "'Poppins', sans-serif" },
@@ -566,7 +594,6 @@
             { name: 'Cinzel', css: "'Cinzel', serif" },
             { name: 'Lora', css: "'Lora', serif" },
             { name: 'Italiana', css: "'Italiana', serif" },
-            { name: 'Fraunces', css: "'Fraunces', serif" },
             { name: 'Montserrat', css: "'Montserrat', sans-serif" },
             { name: 'Raleway', css: "'Raleway', sans-serif" },
             { name: 'Public Sans', css: "'Public Sans', sans-serif" },

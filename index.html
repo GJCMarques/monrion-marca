@@ -240,9 +240,10 @@
       font-size: var(--t1-size);
       letter-spacing: var(--t1-track);
       line-height: var(--t1-lh);
-      max-width: var(--t1-width);
+      max-width: min(var(--t1-width), 100%);
       margin-top: var(--t1-mt);
       margin-bottom: var(--t1-mb);
+      overflow-wrap: break-word;
     }
 
     .slot-2 {
@@ -253,9 +254,10 @@
       font-size: var(--t2-size);
       letter-spacing: var(--t2-track);
       line-height: var(--t2-lh);
-      max-width: var(--t2-width);
+      max-width: min(var(--t2-width), 100%);
       margin-top: var(--t2-mt);
       margin-bottom: var(--t2-mb);
+      overflow-wrap: break-word;
     }
 
     .slot-3 {
@@ -266,10 +268,11 @@
       font-size: var(--t3-size);
       letter-spacing: var(--t3-track);
       line-height: var(--t3-lh);
-      max-width: var(--t3-width);
+      max-width: min(var(--t3-width), 100%);
       margin-top: var(--t3-mt);
       margin-bottom: var(--t3-mb);
       color: var(--muted);
+      overflow-wrap: break-word;
     }
 
     .slot-4 {
@@ -280,10 +283,11 @@
       font-size: var(--t4-size);
       letter-spacing: var(--t4-track);
       line-height: var(--t4-lh);
-      max-width: var(--t4-width);
+      max-width: min(var(--t4-width), 100%);
       margin-top: var(--t4-mt);
       margin-bottom: var(--t4-mb);
       color: var(--muted);
+      overflow-wrap: break-word;
     }
 
     /* 1. Conceito */
@@ -398,10 +402,71 @@
     }
 
     @media (max-width: 820px) {
-      body { height: auto; overflow: auto; }
-      .workspace { flex-direction: column; }
-      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
-      .editorial, .service-row { grid-template-columns: 1fr; }
+      body {
+        height: 100dvh;
+        overflow: hidden;
+      }
+      .topbar {
+        height: auto;
+        padding: 8px 12px;
+        gap: 8px;
+      }
+      .brand-title {
+        display: none;
+      }
+      #layoutButtons {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 2px;
+        -webkit-overflow-scrolling: touch;
+      }
+      #layoutButtons button {
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .workspace {
+        flex-direction: column-reverse;
+        min-height: 0;
+      }
+      .sidebar {
+        width: 100%;
+        max-height: 44dvh;
+        border-right: none;
+        border-top: 1px solid var(--line);
+        padding: 12px 14px 20px;
+      }
+      main {
+        padding: 20px 14px;
+        align-items: flex-start;
+      }
+      .concept, .web-hero, .editorial, .services {
+        padding: 28px 20px;
+      }
+      .web-nav {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-bottom: 20px;
+        margin-bottom: 28px;
+      }
+      .web-links {
+        gap: 14px;
+      }
+      .editorial, .service-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .slot-1 {
+        font-size: min(var(--t1-size), 13vw);
+      }
+      .grid-view {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      select, button {
+        min-height: 34px;
+      }
     }
   </style>
 </head>

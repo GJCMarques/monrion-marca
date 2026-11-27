@@ -1,632 +1,822 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MONRION — Type Lab</title>
-    <link rel="stylesheet" href="./fonts/fonts.css" />
-    <style>
-        @font-face {
-            font-family: 'Godber';
-            src: url('./handpickedfonts/godber/Godber-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MONRION — Type Lab</title>
+  <link rel="stylesheet" href="./fonts/fonts.css" />
+  <style>
+    @font-face {
+      font-family: 'Godber';
+      src: url('./handpickedfonts/godber/Godber-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-        @font-face {
-            font-family: 'Sifonn Pro';
-            src: url('./handpickedfonts/sifonn/SIFONN_PRO.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-        }
+    @font-face {
+      font-family: 'Sifonn Pro';
+      src: url('./handpickedfonts/sifonn/SIFONN_PRO.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-        @font-face {
-            font-family: 'The Seasons';
-            src: url('./fonts/TheSeasons-Regular.woff2') format('woff2'),
-                url('./fonts/TheSeasons-Regular.ttf') format('truetype'),
-                url('./fonts/TheSeasons-Regular.otf') format('opentype');
-            font-weight: normal;
-            font-style: normal;
-        }
+    @font-face {
+      font-family: 'The Seasons';
+      src: url('./fonts/TheSeasons-Regular.woff2') format('woff2'),
+           url('./fonts/TheSeasons-Regular.ttf') format('truetype'),
+           url('./fonts/TheSeasons-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
-        :root {
-            --bg: #ffffff;
-            --text: #111111;
-            --muted: #666666;
-            --line: #e5e5e5;
+    :root {
+      --bg: #ffffff;
+      --panel: #fafafa;
+      --text: #111111;
+      --muted: #777777;
+      --line: #e5e5e5;
+    }
 
-            --font-heading: 'Outfit', sans-serif;
-            --font-body: 'Josefin Sans', sans-serif;
-            --heading-weight: 300;
-            --heading-size: 64px;
-            --heading-style: normal;
-        }
+    body.dark {
+      --bg: #111111;
+      --panel: #161616;
+      --text: #ffffff;
+      --muted: #888888;
+      --line: #282828;
+    }
 
-        body.dark {
-            --bg: #111111;
-            --text: #ffffff;
-            --muted: #999999;
-            --line: #2a2a2a;
-        }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Public Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font-body);
-            -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    /* Topbar mínima */
+    .topbar {
+      height: 48px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
 
-        header {
-            padding: 14px 24px;
-            border-bottom: 1px solid var(--line);
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            font-family: 'Public Sans', sans-serif;
-            font-size: 12px;
-        }
+    .topbar-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
 
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-        }
+    .brand-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-right: 12px;
+    }
 
-        label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--muted);
-        }
+    button {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      padding: 5px 10px;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.15s;
+    }
 
-        select,
-        button {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--line);
-            padding: 5px 10px;
-            font-family: 'Public Sans', sans-serif;
-            font-size: 12px;
-            cursor: pointer;
-        }
+    button:hover {
+      color: var(--text);
+      border-color: var(--line);
+    }
 
-        select option {
-            background: var(--bg);
-            color: var(--text);
-        }
+    button.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
 
-        button.active {
-            background: var(--text);
-            color: var(--bg);
-            border-color: var(--text);
-        }
+    /* Workspace: Sidebar + Canvas */
+    .workspace {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
 
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 48px 24px;
-        }
+    /* Sidebar de Controlo */
+    .sidebar {
+      width: 276px;
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
 
-        .stage {
-            width: 100%;
-            max-width: 920px;
-            display: none;
-        }
+    .sidebar.collapsed { display: none; }
 
-        .stage.active {
-            display: block;
-        }
+    .tabs {
+      display: flex;
+      gap: 2px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px;
+      background: var(--bg);
+    }
 
-        /* Layout 1: Conceito */
-        .concept {
-            padding: 72px 48px;
-            border: 1px solid var(--line);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    .tabs button {
+      flex: 1;
+      border: none;
+      padding: 6px 0;
+      font-size: 11px;
+      font-weight: 500;
+    }
 
-        .concept-title {
-            font-family: var(--font-heading);
-            font-weight: var(--heading-weight);
-            font-style: var(--heading-style);
-            font-size: var(--heading-size);
-            line-height: 1.05;
-            letter-spacing: -0.04em;
-            margin-bottom: 16px;
-        }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-        .concept-right {
-            align-self: flex-end;
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+    .field-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
 
-        .concept-brand {
-            font-family: var(--font-body);
-            font-weight: 300;
-            font-size: 15px;
-            letter-spacing: 0.32em;
-            text-transform: uppercase;
-        }
+    .field-val {
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
 
-        .concept-handle {
-            font-family: var(--font-body);
-            font-weight: 300;
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
+    select {
+      width: 100%;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 12px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
 
-        /* Layout 2: Website Hero */
-        .web-hero {
-            border: 1px solid var(--line);
-            padding: 36px 48px 64px;
-        }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 6px;
+      align-items: center;
+    }
 
-        .web-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 48px;
-            margin-bottom: 56px;
-            border-bottom: 1px solid var(--line);
-        }
+    .toggle-btn {
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--text);
+      padding: 6px 10px;
+      font-size: 12px;
+    }
 
-        .web-logo {
-            font-family: 'Godber', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--text);
+      cursor: pointer;
+      height: 4px;
+    }
 
-        .web-links {
-            display: flex;
-            gap: 24px;
-            font-family: var(--font-body);
-            font-size: 12px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
+    .divider {
+      height: 1px;
+      background: var(--line);
+    }
 
-        .web-hero h1 {
-            font-family: var(--font-heading);
-            font-weight: var(--heading-weight);
-            font-style: var(--heading-style);
-            font-size: var(--heading-size);
-            line-height: 1.08;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
-            max-width: 680px;
-        }
+    .reset-btn {
+      margin-top: auto;
+      border: 1px solid var(--line);
+      padding: 7px;
+      font-size: 11px;
+      text-align: center;
+      color: var(--muted);
+    }
 
-        .web-hero p {
-            font-family: var(--font-body);
-            font-size: 15px;
-            line-height: 1.7;
-            color: var(--muted);
-            max-width: 480px;
-            margin-bottom: 36px;
-        }
+    /* Canvas */
+    main {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 32px;
+    }
 
-        .web-btn {
-            display: inline-block;
-            padding: 12px 28px;
-            border: 1px solid var(--text);
-            font-family: var(--font-body);
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
+    .stage {
+      width: 100%;
+      max-width: 920px;
+      display: none;
+    }
 
-        /* Layout 3: Editorial / Sobre */
-        .editorial {
-            border: 1px solid var(--line);
-            padding: 56px 48px;
-            display: grid;
-            grid-template-columns: 1.1fr 1fr;
-            gap: 48px;
-            align-items: start;
-        }
+    .stage.active { display: block; }
 
-        @media (max-width: 720px) {
-            .editorial {
-                grid-template-columns: 1fr;
-            }
-        }
+    /* Hitbox justa ao texto */
+    [contenteditable="true"] {
+      display: inline-block;
+      width: fit-content;
+      max-width: 100%;
+    }
 
-        .editorial h2 {
-            font-family: var(--font-heading);
-            font-weight: var(--heading-weight);
-            font-style: var(--heading-style);
-            font-size: calc(var(--heading-size) * 0.75);
-            line-height: 1.12;
-            letter-spacing: -0.02em;
-        }
+    [contenteditable="true"]:focus {
+      outline: 1px dashed var(--muted);
+      outline-offset: 4px;
+    }
 
-        .editorial-body p {
-            font-family: var(--font-body);
-            font-size: 15px;
-            line-height: 1.8;
-            color: var(--muted);
-            margin-bottom: 24px;
-        }
+    /* Slots 1, 2, 3, 4 */
+    .slot-1 {
+      font-family: var(--t1-font);
+      font-weight: var(--t1-weight);
+      font-style: var(--t1-style);
+      text-transform: var(--t1-caps);
+      font-size: var(--t1-size);
+      letter-spacing: var(--t1-track);
+      line-height: var(--t1-lh);
+      max-width: var(--t1-width);
+      margin-top: var(--t1-mt);
+      margin-bottom: var(--t1-mb);
+    }
 
-        .editorial-meta {
-            font-family: var(--font-body);
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            border-top: 1px solid var(--line);
-            padding-top: 16px;
-        }
+    .slot-2 {
+      font-family: var(--t2-font);
+      font-weight: var(--t2-weight);
+      font-style: var(--t2-style);
+      text-transform: var(--t2-caps);
+      font-size: var(--t2-size);
+      letter-spacing: var(--t2-track);
+      line-height: var(--t2-lh);
+      max-width: var(--t2-width);
+      margin-top: var(--t2-mt);
+      margin-bottom: var(--t2-mb);
+    }
 
-        /* Layout 4: Serviços / Lista */
-        .services {
-            border: 1px solid var(--line);
-            padding: 48px;
-        }
+    .slot-3 {
+      font-family: var(--t3-font);
+      font-weight: var(--t3-weight);
+      font-style: var(--t3-style);
+      text-transform: var(--t3-caps);
+      font-size: var(--t3-size);
+      letter-spacing: var(--t3-track);
+      line-height: var(--t3-lh);
+      max-width: var(--t3-width);
+      margin-top: var(--t3-mt);
+      margin-bottom: var(--t3-mb);
+      color: var(--muted);
+    }
 
-        .service-row {
-            display: grid;
-            grid-template-columns: 48px 1fr 1.2fr;
-            gap: 24px;
-            align-items: baseline;
-            padding: 24px 0;
-            border-bottom: 1px solid var(--line);
-        }
+    .slot-4 {
+      font-family: var(--t4-font);
+      font-weight: var(--t4-weight);
+      font-style: var(--t4-style);
+      text-transform: var(--t4-caps);
+      font-size: var(--t4-size);
+      letter-spacing: var(--t4-track);
+      line-height: var(--t4-lh);
+      max-width: var(--t4-width);
+      margin-top: var(--t4-mt);
+      margin-bottom: var(--t4-mb);
+      color: var(--muted);
+    }
 
-        .service-row:last-child {
-            border-bottom: none;
-        }
+    /* 1. Conceito */
+    .concept {
+      padding: 72px 48px;
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+    }
 
-        @media (max-width: 720px) {
-            .service-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-        }
+    .concept-right {
+      align-self: flex-end;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
 
-        .service-num {
-            font-family: var(--font-body);
-            font-size: 12px;
-            color: var(--muted);
-            letter-spacing: 0.1em;
-        }
+    /* 2. Website Hero */
+    .web-hero {
+      border: 1px solid var(--line);
+      padding: 36px 48px 64px;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .service-title {
-            font-family: var(--font-heading);
-            font-weight: var(--heading-weight);
-            font-style: var(--heading-style);
-            font-size: calc(var(--heading-size) * 0.45);
-            letter-spacing: -0.02em;
-        }
+    .web-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 32px;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+    }
 
-        .service-desc {
-            font-family: var(--font-body);
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--muted);
-        }
+    .web-links {
+      display: flex;
+      gap: 24px;
+    }
 
-        /* Grelha de todas as fontes */
-        .grid-view {
-            display: none;
-            width: 100%;
-            max-width: 960px;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 28px;
-        }
+    .web-btn {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 12px 28px;
+      border: 1px solid var(--text);
+      color: var(--text) !important;
+      cursor: pointer;
+    }
 
-        .grid-view.show {
-            display: grid;
-        }
+    /* 3. Editorial */
+    .editorial {
+      border: 1px solid var(--line);
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
 
-        .specimen {
-            border-top: 1px solid var(--line);
-            padding-top: 12px;
-            cursor: pointer;
-        }
+    .editorial-meta {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
 
-        .specimen-name {
-            font-family: 'Public Sans', sans-serif;
-            font-size: 11px;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
+    /* 4. Serviços */
+    .services {
+      border: 1px solid var(--line);
+      padding: 48px;
+    }
 
-        .specimen-sample {
-            font-size: 28px;
-            font-weight: 300;
-            line-height: 1.15;
-        }
+    .service-row {
+      display: grid;
+      grid-template-columns: 44px 1fr 1.2fr;
+      gap: 24px;
+      align-items: baseline;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
 
-        [contenteditable="true"]:focus {
-            outline: 1px dashed var(--muted);
-            outline-offset: 4px;
-        }
-    </style>
+    .service-row:last-child { border-bottom: none; }
+    .service-row .slot-1 { font-size: calc(var(--t1-size) * 0.48); margin: 0; }
+    .service-row .slot-2 { margin: 0; }
+
+    /* Grelha Todas */
+    .grid-view {
+      display: none;
+      width: 100%;
+      max-width: 920px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 28px;
+      align-self: flex-start;
+    }
+
+    .grid-view.show { display: grid; }
+
+    .specimen {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      cursor: pointer;
+    }
+
+    .specimen-name {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .specimen-sample {
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.15;
+    }
+
+    @media (max-width: 820px) {
+      body { height: auto; overflow: auto; }
+      .workspace { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+      .editorial, .service-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <header>
-        <div class="controls">
-            <label>
-                Heading
-                <select id="headingSelect">
-                    <optgroup label="Handpicked">
-                        <option value="'Sifonn Pro', sans-serif">Sifonn Pro</option>
-                        <option value="'Godber', sans-serif">Godber</option>
-                    </optgroup>
-                    <optgroup label="Sans-Serif">
-                        <option value="'Outfit', sans-serif" selected>Outfit</option>
-                        <option value="'Questrial', sans-serif">Questrial</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
-                        <option value="'Josefin Sans', sans-serif">Josefin Sans</option>
-                        <option value="'Montserrat', sans-serif">Montserrat (Gotham)</option>
-                        <option value="'Raleway', sans-serif">Raleway</option>
-                        <option value="'Public Sans', sans-serif">Public Sans</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Lato', sans-serif">Lato</option>
-                    </optgroup>
-                    <optgroup label="Serif">
-                        <option value="'The Seasons', serif">The Seasons</option>
-                        <option value="'Playfair Display', serif">Playfair Display</option>
-                        <option value="'Prata', serif">Prata</option>
-                        <option value="'Cinzel', serif">Cinzel</option>
-                        <option value="'Lora', serif">Lora</option>
-                        <option value="'Italiana', serif">Italiana</option>
-                    </optgroup>
-                </select>
-            </label>
+  <header class="topbar">
+    <div class="topbar-group">
+      <span class="brand-title">MONRION</span>
+      <button id="panelBtn" class="active">Controlos</button>
+    </div>
 
-            <label>
-                Body
-                <select id="bodySelect">
-                    <optgroup label="Handpicked">
-                        <option value="'Sifonn Pro', sans-serif">Sifonn Pro</option>
-                        <option value="'Godber', sans-serif">Godber</option>
-                    </optgroup>
-                    <optgroup label="Sans-Serif">
-                        <option value="'Outfit', sans-serif">Outfit</option>
-                        <option value="'Questrial', sans-serif">Questrial</option>
-                        <option value="'Poppins', sans-serif">Poppins</option>
-                        <option value="'Josefin Sans', sans-serif" selected>Josefin Sans</option>
-                        <option value="'Montserrat', sans-serif">Montserrat (Gotham)</option>
-                        <option value="'Raleway', sans-serif">Raleway</option>
-                        <option value="'Public Sans', sans-serif">Public Sans</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Lato', sans-serif">Lato</option>
-                    </optgroup>
-                    <optgroup label="Serif">
-                        <option value="'The Seasons', serif">The Seasons</option>
-                        <option value="'Playfair Display', serif">Playfair Display</option>
-                        <option value="'Prata', serif">Prata</option>
-                        <option value="'Cinzel', serif">Cinzel</option>
-                        <option value="'Lora', serif">Lora</option>
-                        <option value="'Italiana', serif">Italiana</option>
-                    </optgroup>
-                </select>
-            </label>
+    <div class="topbar-group" id="layoutButtons">
+      <button class="active" data-layout="concept">Conceito</button>
+      <button data-layout="hero">Website Hero</button>
+      <button data-layout="editorial">Editorial</button>
+      <button data-layout="services">Serviços</button>
+      <button id="viewBtn">Ver Todas</button>
+    </div>
 
-            <label>
-                Weight
-                <select id="weightSelect">
-                    <option value="300" selected>300</option>
-                    <option value="400">400</option>
-                    <option value="500">500</option>
-                    <option value="600">600</option>
-                    <option value="700">700</option>
-                </select>
-            </label>
+    <div class="topbar-group">
+      <button id="themeBtn">Preto / Branco</button>
+    </div>
+  </header>
 
-            <label>
-                Tam.
-                <input type="range" id="sizeRange" min="28" max="110" value="64"
-                    style="width:80px; accent-color: var(--text); cursor: pointer;">
-            </label>
+  <div class="workspace">
+    <aside class="sidebar" id="sidebar">
+      <div class="tabs" id="slotTabs">
+        <button data-slot="t1" class="active">1º</button>
+        <button data-slot="t2">2º</button>
+        <button data-slot="t3">3º</button>
+        <button data-slot="t4">4º</button>
+      </div>
 
-            <button id="italicBtn" style="font-style: italic;">I</button>
-        </div>
+      <div class="field-group">
+        <div class="field-header"><span>Fonte</span></div>
+        <select id="ctrlFont"></select>
+      </div>
 
-        <div class="controls" id="layoutButtons">
-            <button class="active" data-layout="concept">Conceito</button>
-            <button data-layout="hero">Website Hero</button>
-            <button data-layout="editorial">Editorial</button>
-            <button data-layout="services">Serviços</button>
-            <button id="viewBtn">Ver Todas</button>
-            <button id="themeBtn">Preto / Branco</button>
-        </div>
-    </header>
+      <div class="row-2">
+        <select id="ctrlWeight">
+          <option value="300">Weight 300</option>
+          <option value="400">Weight 400</option>
+          <option value="500">Weight 500</option>
+          <option value="600">Weight 600</option>
+          <option value="700">Weight 700</option>
+        </select>
+        <button id="ctrlItalic" class="toggle-btn" style="font-style:italic;" title="Itálico">I</button>
+        <button id="ctrlCaps" class="toggle-btn" title="Maiúsculas">AA</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Tamanho</span><span class="field-val" id="valSize">64px</span></div>
+        <input type="range" id="ctrlSize" min="10" max="110" step="1" />
+      </div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Espaço entre letras</span><span class="field-val" id="valTrack">-0.04em</span></div>
+        <input type="range" id="ctrlTrack" min="-0.08" max="0.45" step="0.01" />
+      </div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Altura da linha</span><span class="field-val" id="valLh">1.08</span></div>
+        <input type="range" id="ctrlLh" min="0.85" max="2.2" step="0.05" />
+      </div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Largura do texto</span><span class="field-val" id="valWidth">720px</span></div>
+        <input type="range" id="ctrlWidth" min="180" max="900" step="10" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Margem Topo</span><span class="field-val" id="valMt">0px</span></div>
+        <input type="range" id="ctrlMt" min="0" max="80" step="2" />
+      </div>
+
+      <div class="field-group">
+        <div class="field-header"><span>Margem Fundo</span><span class="field-val" id="valMb">16px</span></div>
+        <input type="range" id="ctrlMb" min="0" max="80" step="2" />
+      </div>
+
+      <button class="reset-btn" id="resetBtn">Repor Valores</button>
+    </aside>
 
     <main>
-        <!-- 1. Conceito -->
-        <div class="stage active" id="stage-concept">
-            <div class="concept">
-                <h1 class="concept-title" contenteditable="true">monrion studio</h1>
-                <div class="concept-right">
-                    <div class="concept-brand" contenteditable="true">MONRION</div>
-                    <div class="concept-handle" contenteditable="true">@MONRIONSTUDIO</div>
-                </div>
-            </div>
+      <!-- 1. Conceito -->
+      <div class="stage active" id="stage-concept">
+        <div class="concept">
+          <h1 class="slot-1" data-select="t1" contenteditable="true">monrion studio</h1>
+          <div class="concept-right">
+            <div class="slot-2" data-select="t2" contenteditable="true">MONRION</div>
+            <div class="slot-3" data-select="t3" contenteditable="true">@MONRIONSTUDIO</div>
+          </div>
         </div>
+      </div>
 
-        <!-- 2. Website Hero -->
-        <div class="stage" id="stage-hero">
-            <div class="web-hero">
-                <div class="web-nav">
-                    <div class="web-logo">MONRION</div>
-                    <div class="web-links">
-                        <span>Estúdio</span>
-                        <span>Projetos</span>
-                        <span>Contacto</span>
-                    </div>
-                </div>
-                <h1 contenteditable="true">Direção criativa e arquitetura digital.</h1>
-                <p contenteditable="true">
-                    Construímos identidades e plataformas digitais para marcas que procuram presença, clareza e
-                    permanência.
-                </p>
-                <div class="web-btn">Explorar Projetos</div>
+      <!-- 2. Website Hero -->
+      <div class="stage" id="stage-hero">
+        <div class="web-hero">
+          <div class="web-nav">
+            <div class="slot-4" data-select="t4" contenteditable="true">MONRION</div>
+            <div class="web-links">
+              <span class="slot-3" data-select="t3" contenteditable="true">Estúdio</span>
+              <span class="slot-3" data-select="t3" contenteditable="true">Projetos</span>
+              <span class="slot-3" data-select="t3" contenteditable="true">Contacto</span>
             </div>
+          </div>
+          <h1 class="slot-1" data-select="t1" contenteditable="true">Direção criativa e arquitetura digital.</h1>
+          <p class="slot-2" data-select="t2" contenteditable="true">
+            Construímos identidades e plataformas digitais para marcas que procuram presença, clareza e permanência.
+          </p>
+          <div class="web-btn slot-3" data-select="t3" contenteditable="true">Explorar Projetos</div>
         </div>
+      </div>
 
-        <!-- 3. Editorial -->
-        <div class="stage" id="stage-editorial">
-            <div class="editorial">
-                <h2 contenteditable="true">O essencial, sem ruído visual.</h2>
-                <div class="editorial-body">
-                    <p contenteditable="true">
-                        Cada projeto começa na estrutura. Antes da cor ou do ornamento, definimos a proporção
-                        tipográfica e o ritmo da leitura para que a marca comunique com autoridade natural.
-                    </p>
-                    <div class="editorial-meta">MONRION DIGITAL STUDIO — LISBOA</div>
-                </div>
-            </div>
+      <!-- 3. Editorial -->
+      <div class="stage" id="stage-editorial">
+        <div class="editorial">
+          <h2 class="slot-1" data-select="t1" contenteditable="true">O essencial, sem ruído visual.</h2>
+          <div>
+            <p class="slot-2" data-select="t2" contenteditable="true">
+              Cada projeto começa na estrutura. Antes da cor ou do ornamento, definimos a proporção tipográfica e o ritmo da leitura para que a marca comunique com autoridade natural.
+            </p>
+            <div class="editorial-meta slot-3" data-select="t3" contenteditable="true">MONRION DIGITAL STUDIO — LISBOA</div>
+          </div>
         </div>
+      </div>
 
-        <!-- 4. Serviços -->
-        <div class="stage" id="stage-services">
-            <div class="services">
-                <div class="service-row">
-                    <div class="service-num">01</div>
-                    <div class="service-title" contenteditable="true">Identidade Visual</div>
-                    <div class="service-desc" contenteditable="true">Sistemas tipográficos, direção de arte e manuais de
-                        marca.</div>
-                </div>
-                <div class="service-row">
-                    <div class="service-num">02</div>
-                    <div class="service-title" contenteditable="true">Web Design</div>
-                    <div class="service-desc" contenteditable="true">Websites editoriais e lojas online focadas em
-                        detalhe e conversão.</div>
-                </div>
-                <div class="service-row">
-                    <div class="service-num">03</div>
-                    <div class="service-title" contenteditable="true">Direção Criativa</div>
-                    <div class="service-desc" contenteditable="true">Acompanhamento contínuo de campanhas, fotografia e
-                        presença digital.</div>
-                </div>
-            </div>
+      <!-- 4. Serviços -->
+      <div class="stage" id="stage-services">
+        <div class="services">
+          <div class="service-row">
+            <div class="slot-4" data-select="t4" contenteditable="true">01</div>
+            <div class="slot-1" data-select="t1" contenteditable="true">Identidade Visual</div>
+            <div class="slot-2" data-select="t2" contenteditable="true">Sistemas tipográficos, direção de arte e manuais de marca.</div>
+          </div>
+          <div class="service-row">
+            <div class="slot-4" data-select="t4" contenteditable="true">02</div>
+            <div class="slot-1" data-select="t1" contenteditable="true">Web Design</div>
+            <div class="slot-2" data-select="t2" contenteditable="true">Websites editoriais e lojas online focadas em detalhe e conversão.</div>
+          </div>
+          <div class="service-row">
+            <div class="slot-4" data-select="t4" contenteditable="true">03</div>
+            <div class="slot-1" data-select="t1" contenteditable="true">Direção Criativa</div>
+            <div class="slot-2" data-select="t2" contenteditable="true">Acompanhamento contínuo de campanhas, fotografia e presença digital.</div>
+          </div>
         </div>
+      </div>
 
-        <!-- Grelha Todas -->
-        <div class="grid-view" id="gridView"></div>
+      <!-- Grelha Todas -->
+      <div class="grid-view" id="gridView"></div>
     </main>
+  </div>
 
-    <script>
-        const headingSelect = document.getElementById('headingSelect');
-        const bodySelect = document.getElementById('bodySelect');
-        const gridView = document.getElementById('gridView');
-        const viewBtn = document.getElementById('viewBtn');
-        const stages = document.querySelectorAll('.stage');
-        const layoutBtns = document.querySelectorAll('[data-layout]');
-        let currentLayout = 'concept';
+  <script>
+    const fontGroups = [
+      {
+        label: 'Handpicked',
+        items: [
+          { name: 'Sifonn Pro', css: "'Sifonn Pro', sans-serif" },
+          { name: 'Godber', css: "'Godber', sans-serif" }
+        ]
+      },
+      {
+        label: 'Sans-Serif',
+        items: [
+          { name: 'Outfit', css: "'Outfit', sans-serif" },
+          { name: 'Questrial', css: "'Questrial', sans-serif" },
+          { name: 'Poppins', css: "'Poppins', sans-serif" },
+          { name: 'Josefin Sans', css: "'Josefin Sans', sans-serif" },
+          { name: 'Montserrat (Gotham)', css: "'Montserrat', sans-serif" },
+          { name: 'Raleway', css: "'Raleway', sans-serif" },
+          { name: 'Public Sans', css: "'Public Sans', sans-serif" },
+          { name: 'Inter', css: "'Inter', sans-serif" },
+          { name: 'Lato', css: "'Lato', sans-serif" }
+        ]
+      },
+      {
+        label: 'Serif',
+        items: [
+          { name: 'The Seasons', css: "'The Seasons', serif" },
+          { name: 'Playfair Display', css: "'Playfair Display', serif" },
+          { name: 'Prata', css: "'Prata', serif" },
+          { name: 'Cinzel', css: "'Cinzel', serif" },
+          { name: 'Lora', css: "'Lora', serif" },
+          { name: 'Italiana', css: "'Italiana', serif" }
+        ]
+      }
+    ];
 
-        headingSelect.addEventListener('change', () => {
-            document.documentElement.style.setProperty('--font-heading', headingSelect.value);
+    const defaults = {
+      t1: { font: "'Outfit', sans-serif", weight: '300', style: 'normal', caps: 'none', size: 64, track: -0.04, lh: 1.08, width: 720, mt: 0, mb: 16 },
+      t2: { font: "'Josefin Sans', sans-serif", weight: '300', style: 'normal', caps: 'uppercase', size: 15, track: 0.30, lh: 1.60, width: 540, mt: 0, mb: 8 },
+      t3: { font: "'Josefin Sans', sans-serif", weight: '300', style: 'normal', caps: 'uppercase', size: 11, track: 0.16, lh: 1.50, width: 540, mt: 0, mb: 0 },
+      t4: { font: "'Godber', sans-serif", weight: '400', style: 'normal', caps: 'uppercase', size: 18, track: 0.20, lh: 1.20, width: 400, mt: 0, mb: 0 }
+    };
+
+    const state = {
+      t1: { ...defaults.t1 },
+      t2: { ...defaults.t2 },
+      t3: { ...defaults.t3 },
+      t4: { ...defaults.t4 }
+    };
+
+    let activeSlot = 't1';
+
+    const ctrlFont = document.getElementById('ctrlFont');
+    const ctrlWeight = document.getElementById('ctrlWeight');
+    const ctrlItalic = document.getElementById('ctrlItalic');
+    const ctrlCaps = document.getElementById('ctrlCaps');
+    const ctrlSize = document.getElementById('ctrlSize');
+    const ctrlTrack = document.getElementById('ctrlTrack');
+    const ctrlLh = document.getElementById('ctrlLh');
+    const ctrlWidth = document.getElementById('ctrlWidth');
+    const ctrlMt = document.getElementById('ctrlMt');
+    const ctrlMb = document.getElementById('ctrlMb');
+    const slotBtns = document.querySelectorAll('#slotTabs button');
+
+    const layoutSlots = {
+      concept: [
+        { id: 't1', label: '1º Título' },
+        { id: 't2', label: '2º Marca' },
+        { id: 't3', label: '3º Handle' }
+      ],
+      hero: [
+        { id: 't1', label: '1º Título' },
+        { id: 't2', label: '2º Texto' },
+        { id: 't3', label: '3º Nav/Btn' },
+        { id: 't4', label: '4º Logo' }
+      ],
+      editorial: [
+        { id: 't1', label: '1º Título' },
+        { id: 't2', label: '2º Texto' },
+        { id: 't3', label: '3º Rodapé' }
+      ],
+      services: [
+        { id: 't1', label: '1º Serviço' },
+        { id: 't2', label: '2º Desc.' },
+        { id: 't4', label: '3º Num.' }
+      ]
+    };
+
+    function renderSlotTabs(layoutName) {
+      const slots = layoutSlots[layoutName] || layoutSlots.concept;
+      const tabsEl = document.getElementById('slotTabs');
+      tabsEl.innerHTML = '';
+      slots.forEach(sl => {
+        const btn = document.createElement('button');
+        btn.dataset.slot = sl.id;
+        btn.textContent = sl.label;
+        btn.addEventListener('click', () => selectSlot(sl.id));
+        tabsEl.appendChild(btn);
+      });
+      if (!slots.some(sl => sl.id === activeSlot)) {
+        activeSlot = slots[0].id;
+      }
+      selectSlot(activeSlot);
+    }
+
+    fontGroups.forEach(group => {
+      const og = document.createElement('optgroup');
+      og.label = group.label;
+      group.items.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = item.css;
+        opt.textContent = item.name;
+        og.appendChild(opt);
+      });
+      ctrlFont.appendChild(og);
+    });
+
+    function applyState(t) {
+      const s = state[t];
+      const root = document.documentElement.style;
+      root.setProperty(`--${t}-font`, s.font);
+      root.setProperty(`--${t}-weight`, s.weight);
+      root.setProperty(`--${t}-style`, s.style);
+      root.setProperty(`--${t}-caps`, s.caps);
+      root.setProperty(`--${t}-size`, s.size + 'px');
+      root.setProperty(`--${t}-track`, s.track + 'em');
+      root.setProperty(`--${t}-lh`, s.lh);
+      root.setProperty(`--${t}-width`, s.width + 'px');
+      root.setProperty(`--${t}-mt`, s.mt + 'px');
+      root.setProperty(`--${t}-mb`, s.mb + 'px');
+    }
+
+    function selectSlot(slot) {
+      activeSlot = slot;
+      document.querySelectorAll('#slotTabs button').forEach(b => b.classList.toggle('active', b.dataset.slot === slot));
+      const s = state[activeSlot];
+      ctrlFont.value = s.font;
+      ctrlWeight.value = s.weight;
+      ctrlItalic.classList.toggle('active', s.style === 'italic');
+      ctrlCaps.classList.toggle('active', s.caps === 'uppercase');
+      ctrlSize.value = s.size;
+      ctrlTrack.value = s.track;
+      ctrlLh.value = s.lh;
+      ctrlWidth.value = s.width;
+      ctrlMt.value = s.mt;
+      ctrlMb.value = s.mb;
+
+      document.getElementById('valSize').textContent = s.size + 'px';
+      document.getElementById('valTrack').textContent = s.track + 'em';
+      document.getElementById('valLh').textContent = s.lh;
+      document.getElementById('valWidth').textContent = s.width + 'px';
+      document.getElementById('valMt').textContent = s.mt + 'px';
+      document.getElementById('valMb').textContent = s.mb + 'px';
+    }
+
+    // Ao clicar ou focar num texto no canvas, seleciona automaticamente esse slot na sidebar
+    document.querySelectorAll('[data-select]').forEach(el => {
+      const activate = () => selectSlot(el.dataset.select);
+      el.addEventListener('mousedown', activate);
+      el.addEventListener('focus', activate);
+    });
+
+    ctrlFont.addEventListener('change', e => { state[activeSlot].font = e.target.value; applyState(activeSlot); });
+    ctrlWeight.addEventListener('change', e => { state[activeSlot].weight = e.target.value; applyState(activeSlot); });
+    ctrlItalic.addEventListener('click', () => {
+      state[activeSlot].style = state[activeSlot].style === 'italic' ? 'normal' : 'italic';
+      applyState(activeSlot);
+      selectSlot(activeSlot);
+    });
+    ctrlCaps.addEventListener('click', () => {
+      state[activeSlot].caps = state[activeSlot].caps === 'uppercase' ? 'none' : 'uppercase';
+      applyState(activeSlot);
+      selectSlot(activeSlot);
+    });
+    ctrlSize.addEventListener('input', e => { state[activeSlot].size = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+    ctrlTrack.addEventListener('input', e => { state[activeSlot].track = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+    ctrlLh.addEventListener('input', e => { state[activeSlot].lh = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+    ctrlWidth.addEventListener('input', e => { state[activeSlot].width = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+    ctrlMt.addEventListener('input', e => { state[activeSlot].mt = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+    ctrlMb.addEventListener('input', e => { state[activeSlot].mb = Number(e.target.value); applyState(activeSlot); selectSlot(activeSlot); });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      state[activeSlot] = { ...defaults[activeSlot] };
+      applyState(activeSlot);
+      selectSlot(activeSlot);
+    });
+
+    const sidebar = document.getElementById('sidebar');
+    const panelBtn = document.getElementById('panelBtn');
+    panelBtn.addEventListener('click', () => {
+      const hidden = sidebar.classList.toggle('collapsed');
+      panelBtn.classList.toggle('active', !hidden);
+    });
+
+    document.getElementById('themeBtn').addEventListener('click', () => document.body.classList.toggle('dark'));
+
+    const gridView = document.getElementById('gridView');
+    const viewBtn = document.getElementById('viewBtn');
+    const stages = document.querySelectorAll('.stage');
+    const layoutBtns = document.querySelectorAll('[data-layout]');
+    let currentLayout = 'concept';
+
+    function showLayout(name) {
+      currentLayout = name;
+      gridView.classList.remove('show');
+      viewBtn.classList.remove('active');
+      stages.forEach(s => s.classList.remove('active'));
+      document.getElementById(`stage-${name}`).classList.add('active');
+      layoutBtns.forEach(b => b.classList.toggle('active', b.dataset.layout === name));
+      renderSlotTabs(name);
+    }
+
+    layoutBtns.forEach(btn => btn.addEventListener('click', () => showLayout(btn.dataset.layout)));
+
+    fontGroups.forEach(group => {
+      group.items.forEach(f => {
+        const card = document.createElement('div');
+        card.className = 'specimen';
+        card.innerHTML = `
+          <div class="specimen-name">${f.name} — ${group.label}</div>
+          <div class="specimen-sample" style="font-family: ${f.css}">monrion studio</div>
+        `;
+        card.addEventListener('click', () => {
+          state[activeSlot].font = f.css;
+          applyState(activeSlot);
+          selectSlot(activeSlot);
+          showLayout(currentLayout);
         });
+        gridView.appendChild(card);
+      });
+    });
 
-        bodySelect.addEventListener('change', () => {
-            document.documentElement.style.setProperty('--font-body', bodySelect.value);
-        });
+    viewBtn.addEventListener('click', () => {
+      const showingGrid = gridView.classList.toggle('show');
+      viewBtn.classList.toggle('active', showingGrid);
+      if (showingGrid) {
+        stages.forEach(s => s.classList.remove('active'));
+        layoutBtns.forEach(b => b.classList.remove('active'));
+      } else {
+        showLayout(currentLayout);
+      }
+    });
 
-        document.getElementById('weightSelect').addEventListener('change', (e) => {
-            document.documentElement.style.setProperty('--heading-weight', e.target.value);
-        });
-
-        document.getElementById('sizeRange').addEventListener('input', (e) => {
-            document.documentElement.style.setProperty('--heading-size', e.target.value + 'px');
-        });
-
-        const italicBtn = document.getElementById('italicBtn');
-        italicBtn.addEventListener('click', () => {
-            const isItalic = italicBtn.classList.toggle('active');
-            document.documentElement.style.setProperty('--heading-style', isItalic ? 'italic' : 'normal');
-        });
-
-        document.getElementById('themeBtn').addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-        });
-
-        function showLayout(name) {
-            currentLayout = name;
-            gridView.classList.remove('show');
-            viewBtn.classList.remove('active');
-            stages.forEach(s => s.classList.remove('active'));
-            document.getElementById(`stage-${name}`).classList.add('active');
-            layoutBtns.forEach(b => b.classList.toggle('active', b.dataset.layout === name));
-        }
-
-        layoutBtns.forEach(btn => {
-            btn.addEventListener('click', () => showLayout(btn.dataset.layout));
-        });
-
-        const allFonts = [
-            { name: 'Sifonn Pro (Handpicked)', css: "'Sifonn Pro', sans-serif" },
-            { name: 'Godber (Handpicked)', css: "'Godber', sans-serif" },
-            { name: 'Outfit', css: "'Outfit', sans-serif" },
-            { name: 'Questrial', css: "'Questrial', sans-serif" },
-            { name: 'Poppins', css: "'Poppins', sans-serif" },
-            { name: 'Josefin Sans', css: "'Josefin Sans', sans-serif" },
-            { name: 'The Seasons', css: "'The Seasons', serif" },
-            { name: 'Playfair Display', css: "'Playfair Display', serif" },
-            { name: 'Prata', css: "'Prata', serif" },
-            { name: 'Cinzel', css: "'Cinzel', serif" },
-            { name: 'Lora', css: "'Lora', serif" },
-            { name: 'Italiana', css: "'Italiana', serif" },
-            { name: 'Montserrat', css: "'Montserrat', sans-serif" },
-            { name: 'Raleway', css: "'Raleway', sans-serif" },
-            { name: 'Public Sans', css: "'Public Sans', sans-serif" },
-            { name: 'Lato', css: "'Lato', sans-serif" },
-            { name: 'Inter', css: "'Inter', sans-serif" },
-        ];
-
-        allFonts.forEach(f => {
-            const card = document.createElement('div');
-            card.className = 'specimen';
-            card.innerHTML = `
-        <div class="specimen-name">${f.name}</div>
-        <div class="specimen-sample" style="font-family: ${f.css}">monrion studio</div>
-      `;
-            card.addEventListener('click', () => {
-                document.documentElement.style.setProperty('--font-heading', f.css);
-                headingSelect.value = f.css;
-                showLayout(currentLayout);
-            });
-            gridView.appendChild(card);
-        });
-
-        viewBtn.addEventListener('click', () => {
-            const showingGrid = gridView.classList.toggle('show');
-            viewBtn.classList.toggle('active', showingGrid);
-            if (showingGrid) {
-                stages.forEach(s => s.classList.remove('active'));
-                layoutBtns.forEach(b => b.classList.remove('active'));
-            } else {
-                showLayout(currentLayout);
-            }
-        });
-    </script>
+    ['t1', 't2', 't3', 't4'].forEach(applyState);
+    renderSlotTabs('concept');
+  </script>
 </body>
-
 </html>

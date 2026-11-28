@@ -451,25 +451,30 @@
 
     .compare-card {
       border: 1px solid var(--line);
-      padding: 24px 20px;
+      padding: 28px 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
       min-width: 0;
+      cursor: pointer;
     }
 
-    .compare-card-controls {
+    .compare-card.selected {
+      border-color: var(--text);
+    }
+
+    .compare-card-label {
+      font-family: 'Public Sans', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 12px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--line);
+      justify-content: space-between;
     }
 
     .compare-sample-title {
-      font-size: var(--cmp-size, 40px);
       line-height: 1.1;
       overflow-wrap: break-word;
+      max-width: 100%;
     }
 
     @media (max-width: 820px) {
@@ -705,10 +710,6 @@
       <div class="compare-view" id="compareView">
         <div class="compare-bar">
           <input type="text" id="compareText" class="compare-input" value="monrion studio" placeholder="Texto de comparação..." />
-          <label style="font-size:11px; color:var(--muted); display:flex; align-items:center; gap:6px;">
-            Tam. <input type="range" id="compareSize" min="16" max="110" value="40" style="width:90px;">
-            <span id="compareSizeVal" style="color:var(--text); min-width:34px;">40px</span>
-          </label>
           <div class="topbar-group">
             <button id="cols2Btn">2 Colunas</button>
             <button id="cols3Btn" class="active">3 Colunas</button>
@@ -754,14 +755,20 @@
       t1: { font: "'Outfit', sans-serif", weight: '300', style: 'normal', caps: 'none', size: 64, track: -0.04, lh: 1.08, width: 720, mt: 0, mb: 16 },
       t2: { font: "'Josefin Sans', sans-serif", weight: '300', style: 'normal', caps: 'uppercase', size: 15, track: 0.30, lh: 1.60, width: 540, mt: 0, mb: 8 },
       t3: { font: "'Josefin Sans', sans-serif", weight: '300', style: 'normal', caps: 'uppercase', size: 11, track: 0.16, lh: 1.50, width: 540, mt: 0, mb: 0 },
-      t4: { font: "'Godber', sans-serif", weight: '400', style: 'normal', caps: 'uppercase', size: 18, track: 0.20, lh: 1.20, width: 400, mt: 0, mb: 0 }
+      t4: { font: "'Godber', sans-serif", weight: '400', style: 'normal', caps: 'uppercase', size: 18, track: 0.20, lh: 1.20, width: 400, mt: 0, mb: 0 },
+      c1: { font: "'Outfit', sans-serif", weight: '300', style: 'normal', caps: 'none', size: 44, track: -0.04, lh: 1.08, width: 720, mt: 0, mb: 0 },
+      c2: { font: "'Playfair Display', serif", weight: '400', style: 'normal', caps: 'none', size: 44, track: 0.00, lh: 1.08, width: 720, mt: 0, mb: 0 },
+      c3: { font: "'Godber', sans-serif", weight: '400', style: 'normal', caps: 'uppercase', size: 44, track: 0.12, lh: 1.08, width: 720, mt: 0, mb: 0 }
     };
 
     const state = {
       t1: { ...defaults.t1 },
       t2: { ...defaults.t2 },
       t3: { ...defaults.t3 },
-      t4: { ...defaults.t4 }
+      t4: { ...defaults.t4 },
+      c1: { ...defaults.c1 },
+      c2: { ...defaults.c2 },
+      c3: { ...defaults.c3 }
     };
 
     let activeSlot = 't1';
@@ -799,6 +806,11 @@
         { id: 't1', label: '1º Serviço' },
         { id: 't2', label: '2º Desc.' },
         { id: 't4', label: '3º Num.' }
+      ],
+      compare: [
+        { id: 'c1', label: 'Col 1' },
+        { id: 'c2', label: 'Col 2' },
+        { id: 'c3', label: 'Col 3' }
       ]
     };
 
@@ -833,6 +845,26 @@
 
     function applyState(t) {
       const s = state[t];
+      if (t.startsWith('c')) {
+        const el = document.querySelector(`.compare-sample-title[data-col="${t}"]`);
+        const labelEl = document.querySelector(`.compare-card[data-col="${t}"] .cmp-fname`);
+        if (el) {
+          el.style.fontFamily = s.font;
+          el.style.fontWeight = s.weight;
+          el.style.fontStyle = s.style;
+          el.style.textTransform = s.caps;
+          el.style.fontSize = s.size + 'px';
+          el.style.letterSpacing = s.track + 'em';
+          el.style.lineHeight = s.lh;
+          el.style.maxWidth = `min(${s.width}px, 100%)`;
+          el.style.marginTop = s.mt + 'px';
+          el.style.marginBottom = s.mb + 'px';
+        }
+        if (labelEl) {
+          labelEl.textContent = s.font.split(',')[0].replace(/'/g, '');
+        }
+        return;
+      }
       const root = document.documentElement.style;
       root.setProperty(`--${t}-font`, s.font);
       root.setProperty(`--${t}-weight`, s.weight);
@@ -849,6 +881,7 @@
     function selectSlot(slot) {
       activeSlot = slot;
       document.querySelectorAll('#slotTabs button').forEach(b => b.classList.toggle('active', b.dataset.slot === slot));
+      document.querySelectorAll('.compare-card').forEach(c => c.classList.toggle('selected', c.dataset.col === slot));
       const s = state[activeSlot];
       ctrlFont.value = s.font;
       ctrlWeight.value = s.weight;
@@ -963,77 +996,28 @@
       }
     });
 
-    // Comparador de 2 ou 3 fontes
+    // Comparador de 2 ou 3 fontes controlado pela sidebar
     const compareCols = document.getElementById('compareCols');
     const compareText = document.getElementById('compareText');
     const cols2Btn = document.getElementById('cols2Btn');
     const cols3Btn = document.getElementById('cols3Btn');
-    const compareDefaults = [
-      "'Outfit', sans-serif",
-      "'Playfair Display', serif",
-      "'Godber', sans-serif"
-    ];
 
     function buildCompareCards() {
       compareCols.innerHTML = '';
-      compareDefaults.forEach((defFont, idx) => {
+      ['c1', 'c2', 'c3'].forEach((colId, idx) => {
         const card = document.createElement('div');
         card.className = 'compare-card';
+        card.dataset.col = colId;
         card.innerHTML = `
-          <div class="compare-card-controls">
-            <select class="cmp-font"></select>
-            <div class="row-2">
-              <select class="cmp-weight">
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300" selected>300</option>
-                <option value="400">400</option>
-                <option value="500">500</option>
-                <option value="600">600</option>
-                <option value="700">700</option>
-                <option value="800">800</option>
-                <option value="900">900</option>
-              </select>
-              <button class="toggle-btn cmp-italic" style="font-style:italic;">I</button>
-              <button class="toggle-btn cmp-caps">AA</button>
-            </div>
+          <div class="compare-card-label">
+            <span>Col ${idx + 1}</span>
+            <span class="cmp-fname"></span>
           </div>
-          <div class="compare-sample-title">monrion studio</div>
+          <div class="compare-sample-title" data-col="${colId}">monrion studio</div>
         `;
-
-        const selFont = card.querySelector('.cmp-font');
-        fontGroups.forEach(group => {
-          const og = document.createElement('optgroup');
-          og.label = group.label;
-          group.items.forEach(item => {
-            const opt = document.createElement('option');
-            opt.value = item.css;
-            opt.textContent = item.name;
-            if (item.css === defFont) opt.selected = true;
-            og.appendChild(opt);
-          });
-          selFont.appendChild(og);
-        });
-
-        const selWeight = card.querySelector('.cmp-weight');
-        const btnItalic = card.querySelector('.cmp-italic');
-        const btnCaps = card.querySelector('.cmp-caps');
-        const titleEl = card.querySelector('.compare-sample-title');
-
-        function updateCard() {
-          titleEl.style.fontFamily = selFont.value;
-          titleEl.style.fontWeight = selWeight.value;
-          titleEl.style.fontStyle = btnItalic.classList.contains('active') ? 'italic' : 'normal';
-          titleEl.style.textTransform = btnCaps.classList.contains('active') ? 'uppercase' : 'none';
-        }
-
-        selFont.addEventListener('change', updateCard);
-        selWeight.addEventListener('change', updateCard);
-        btnItalic.addEventListener('click', () => { btnItalic.classList.toggle('active'); updateCard(); });
-        btnCaps.addEventListener('click', () => { btnCaps.classList.toggle('active'); updateCard(); });
-
-        updateCard();
+        card.addEventListener('click', () => selectSlot(colId));
         compareCols.appendChild(card);
+        applyState(colId);
       });
     }
 
@@ -1042,11 +1026,6 @@
     compareText.addEventListener('input', (e) => {
       const val = e.target.value || 'monrion studio';
       document.querySelectorAll('.compare-sample-title').forEach(el => { el.textContent = val; });
-    });
-
-    document.getElementById('compareSize').addEventListener('input', (e) => {
-      document.documentElement.style.setProperty('--cmp-size', e.target.value + 'px');
-      document.getElementById('compareSizeVal').textContent = e.target.value + 'px';
     });
 
     cols2Btn.addEventListener('click', () => {
@@ -1069,6 +1048,7 @@
       if (showing) {
         stages.forEach(s => s.classList.remove('active'));
         layoutBtns.forEach(b => b.classList.remove('active'));
+        renderSlotTabs('compare');
       } else {
         showLayout(currentLayout);
       }

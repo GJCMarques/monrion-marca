@@ -401,7 +401,95 @@
       line-height: 1.15;
     }
 
+    /* Vista Comparar */
+    .compare-view {
+      display: none;
+      width: 100%;
+      max-width: 1080px;
+      flex-direction: column;
+      gap: 20px;
+      align-self: flex-start;
+    }
+
+    .compare-view.show { display: flex; }
+
+    .compare-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .compare-input {
+      flex: 1;
+      min-width: 200px;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 7px 10px;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 13px;
+      border-radius: 3px;
+    }
+
+    .compare-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .compare-cols.cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-cols.cols-2 .compare-card:nth-child(3) {
+      display: none;
+    }
+
+    .compare-card {
+      border: 1px solid var(--line);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .compare-card-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .compare-sample-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
+      overflow-wrap: break-word;
+    }
+
+    .compare-sample-sub {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      overflow-wrap: break-word;
+    }
+
+    .compare-use-btn {
+      margin-top: auto;
+      align-self: flex-start;
+      border: 1px solid var(--line);
+      font-size: 11px;
+    }
+
     @media (max-width: 820px) {
+      .compare-cols, .compare-cols.cols-2 {
+        grid-template-columns: 1fr;
+      }
       body {
         height: 100dvh;
         overflow: hidden;
@@ -483,6 +571,7 @@
       <button data-layout="hero">Website Hero</button>
       <button data-layout="editorial">Editorial</button>
       <button data-layout="services">Serviços</button>
+      <button id="compareBtn">Comparar</button>
       <button id="viewBtn">Ver Todas</button>
     </div>
 
@@ -625,6 +714,18 @@
 
       <!-- Grelha Todas -->
       <div class="grid-view" id="gridView"></div>
+
+      <!-- Comparação 2 ou 3 fontes -->
+      <div class="compare-view" id="compareView">
+        <div class="compare-bar">
+          <input type="text" id="compareText" class="compare-input" value="monrion studio" placeholder="Texto de comparação..." />
+          <div class="topbar-group">
+            <button id="cols2Btn">2 Colunas</button>
+            <button id="cols3Btn" class="active">3 Colunas</button>
+          </div>
+        </div>
+        <div class="compare-cols" id="compareCols"></div>
+      </div>
     </main>
   </div>
 
@@ -821,6 +922,8 @@
 
     const gridView = document.getElementById('gridView');
     const viewBtn = document.getElementById('viewBtn');
+    const compareView = document.getElementById('compareView');
+    const compareBtn = document.getElementById('compareBtn');
     const stages = document.querySelectorAll('.stage');
     const layoutBtns = document.querySelectorAll('[data-layout]');
     let currentLayout = 'concept';
@@ -829,6 +932,8 @@
       currentLayout = name;
       gridView.classList.remove('show');
       viewBtn.classList.remove('active');
+      compareView.classList.remove('show');
+      compareBtn.classList.remove('active');
       stages.forEach(s => s.classList.remove('active'));
       document.getElementById(`stage-${name}`).classList.add('active');
       layoutBtns.forEach(b => b.classList.toggle('active', b.dataset.layout === name));
@@ -858,7 +963,128 @@
     viewBtn.addEventListener('click', () => {
       const showingGrid = gridView.classList.toggle('show');
       viewBtn.classList.toggle('active', showingGrid);
+      compareView.classList.remove('show');
+      compareBtn.classList.remove('active');
       if (showingGrid) {
+        stages.forEach(s => s.classList.remove('active'));
+        layoutBtns.forEach(b => b.classList.remove('active'));
+      } else {
+        showLayout(currentLayout);
+      }
+    });
+
+    // Comparador de 2 ou 3 fontes
+    const compareCols = document.getElementById('compareCols');
+    const compareText = document.getElementById('compareText');
+    const cols2Btn = document.getElementById('cols2Btn');
+    const cols3Btn = document.getElementById('cols3Btn');
+    const compareDefaults = [
+      "'Outfit', sans-serif",
+      "'Playfair Display', serif",
+      "'Godber', sans-serif"
+    ];
+
+    function buildCompareCards() {
+      compareCols.innerHTML = '';
+      compareDefaults.forEach((defFont, idx) => {
+        const card = document.createElement('div');
+        card.className = 'compare-card';
+        card.innerHTML = `
+          <div class="compare-card-controls">
+            <select class="cmp-font"></select>
+            <div class="row-2">
+              <select class="cmp-weight">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300" selected>300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+              </select>
+              <button class="toggle-btn cmp-italic" style="font-style:italic;">I</button>
+              <button class="toggle-btn cmp-caps">AA</button>
+            </div>
+          </div>
+          <div class="compare-sample-title">monrion studio</div>
+          <div class="compare-sample-sub">MONRION DIGITAL STUDIO — Elegância silenciosa em cada detalhe digital.</div>
+          <button class="compare-use-btn">Usar no Primário</button>
+        `;
+
+        const selFont = card.querySelector('.cmp-font');
+        fontGroups.forEach(group => {
+          const og = document.createElement('optgroup');
+          og.label = group.label;
+          group.items.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = item.css;
+            opt.textContent = item.name;
+            if (item.css === defFont) opt.selected = true;
+            og.appendChild(opt);
+          });
+          selFont.appendChild(og);
+        });
+
+        const selWeight = card.querySelector('.cmp-weight');
+        const btnItalic = card.querySelector('.cmp-italic');
+        const btnCaps = card.querySelector('.cmp-caps');
+        const titleEl = card.querySelector('.compare-sample-title');
+        const subEl = card.querySelector('.compare-sample-sub');
+
+        function updateCard() {
+          titleEl.style.fontFamily = selFont.value;
+          titleEl.style.fontWeight = selWeight.value;
+          titleEl.style.fontStyle = btnItalic.classList.contains('active') ? 'italic' : 'normal';
+          titleEl.style.textTransform = btnCaps.classList.contains('active') ? 'uppercase' : 'none';
+          subEl.style.fontFamily = selFont.value;
+        }
+
+        selFont.addEventListener('change', updateCard);
+        selWeight.addEventListener('change', updateCard);
+        btnItalic.addEventListener('click', () => { btnItalic.classList.toggle('active'); updateCard(); });
+        btnCaps.addEventListener('click', () => { btnCaps.classList.toggle('active'); updateCard(); });
+        card.querySelector('.compare-use-btn').addEventListener('click', () => {
+          state.t1.font = selFont.value;
+          state.t1.weight = selWeight.value;
+          state.t1.style = btnItalic.classList.contains('active') ? 'italic' : 'normal';
+          state.t1.caps = btnCaps.classList.contains('active') ? 'uppercase' : 'none';
+          applyState('t1');
+          showLayout(currentLayout);
+          selectSlot('t1');
+        });
+
+        updateCard();
+        compareCols.appendChild(card);
+      });
+    }
+
+    buildCompareCards();
+
+    compareText.addEventListener('input', (e) => {
+      const val = e.target.value || 'monrion studio';
+      document.querySelectorAll('.compare-sample-title').forEach(el => { el.textContent = val; });
+    });
+
+    cols2Btn.addEventListener('click', () => {
+      compareCols.classList.add('cols-2');
+      cols2Btn.classList.add('active');
+      cols3Btn.classList.remove('active');
+    });
+
+    cols3Btn.addEventListener('click', () => {
+      compareCols.classList.remove('cols-2');
+      cols3Btn.classList.add('active');
+      cols2Btn.classList.remove('active');
+    });
+
+    compareBtn.addEventListener('click', () => {
+      const showing = compareView.classList.toggle('show');
+      compareBtn.classList.toggle('active', showing);
+      gridView.classList.remove('show');
+      viewBtn.classList.remove('active');
+      if (showing) {
         stages.forEach(s => s.classList.remove('active'));
         layoutBtns.forEach(b => b.classList.remove('active'));
       } else {

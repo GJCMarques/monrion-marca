@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from urllib.parse import quote
 
 BASE = 'handpickedfonts'
 CATEGORIES = [
@@ -37,7 +38,7 @@ def detect_weight(fname_lower):
         return 100
     if 'thin' in fname_lower:
         return 200
-    if 'light' in fname_lower or 'fin' in fname_lower:
+    if 'light' in fname_lower or re.search(r'(?:^|[-_])fin(?:$|[-_.])', fname_lower):
         return 300
     if 'medium' in fname_lower:
         return 500
@@ -97,13 +98,16 @@ for folder, label, fallback in CATEGORIES:
         if not variants:
             continue
 
+        normal_count = sum(1 for (_, st) in variants if st == 'normal')
         for (w, st), (_, rel_path, ext) in sorted(variants.items()):
             fmt = EXT_FORMAT[ext]
+            encoded_path = quote(rel_path, safe='/')
+            fw = '100 900' if (st == 'normal' and normal_count == 1) else str(w)
             css_rules.append(
                 f"@font-face {{\n"
                 f"  font-family: '{fam_name}';\n"
-                f"  src: url('./{rel_path}') format('{fmt}');\n"
-                f"  font-weight: {w};\n"
+                f"  src: url('./{encoded_path}') format('{fmt}');\n"
+                f"  font-weight: {fw};\n"
                 f"  font-style: {st};\n"
                 f"}}"
             )

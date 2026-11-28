@@ -155,21 +155,21 @@
 @font-face {
   font-family: 'DOF';
   src: url('./sans-serif/dof/DOF-Afield-Regular.ttf') format('truetype');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Existence';
   src: url('./sans-serif/existence-light/Existence-Light.otf') format('opentype');
-  font-weight: 300;
+  font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Godber';
   src: url('./sans-serif/godber/Godber-Regular.ttf') format('truetype');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
 }
 
@@ -288,7 +288,7 @@
 @font-face {
   font-family: 'Sifonn Pro';
   src: url('./sans-serif/sifonn/SIFONN_PRO.otf') format('opentype');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
 }
 
@@ -337,14 +337,14 @@
 @font-face {
   font-family: 'Tenderness';
   src: url('./serif/tenderness_0601/Tenderness-Regular.otf') format('opentype');
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Écrou';
-  src: url('./serif/écrou_Regular/ecrou-Regular.woff2') format('woff2');
-  font-weight: 400;
+  src: url('./serif/%C3%A9crou_Regular/ecrou-Regular.woff2') format('woff2');
+  font-weight: 100 900;
   font-style: normal;
 }
 
@@ -364,14 +364,14 @@
 
 @font-face {
   font-family: 'Biloxi Script';
-  src: url('./script/biloxi-script/Biloxi Script.ttf') format('truetype');
-  font-weight: 400;
+  src: url('./script/biloxi-script/Biloxi%20Script.ttf') format('truetype');
+  font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Zapfino';
   src: url('./script/zapfino/Zapfino.ttf') format('truetype');
-  font-weight: 300;
+  font-weight: 100 900;
   font-style: normal;
 }

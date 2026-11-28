@@ -467,23 +467,9 @@
     }
 
     .compare-sample-title {
-      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      font-size: var(--cmp-size, 40px);
       line-height: 1.1;
       overflow-wrap: break-word;
-    }
-
-    .compare-sample-sub {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-      overflow-wrap: break-word;
-    }
-
-    .compare-use-btn {
-      margin-top: auto;
-      align-self: flex-start;
-      border: 1px solid var(--line);
-      font-size: 11px;
     }
 
     @media (max-width: 820px) {
@@ -719,6 +705,10 @@
       <div class="compare-view" id="compareView">
         <div class="compare-bar">
           <input type="text" id="compareText" class="compare-input" value="monrion studio" placeholder="Texto de comparação..." />
+          <label style="font-size:11px; color:var(--muted); display:flex; align-items:center; gap:6px;">
+            Tam. <input type="range" id="compareSize" min="16" max="110" value="40" style="width:90px;">
+            <span id="compareSizeVal" style="color:var(--text); min-width:34px;">40px</span>
+          </label>
           <div class="topbar-group">
             <button id="cols2Btn">2 Colunas</button>
             <button id="cols3Btn" class="active">3 Colunas</button>
@@ -1009,8 +999,6 @@
             </div>
           </div>
           <div class="compare-sample-title">monrion studio</div>
-          <div class="compare-sample-sub">MONRION DIGITAL STUDIO — Elegância silenciosa em cada detalhe digital.</div>
-          <button class="compare-use-btn">Usar no Primário</button>
         `;
 
         const selFont = card.querySelector('.cmp-font');
@@ -1031,29 +1019,18 @@
         const btnItalic = card.querySelector('.cmp-italic');
         const btnCaps = card.querySelector('.cmp-caps');
         const titleEl = card.querySelector('.compare-sample-title');
-        const subEl = card.querySelector('.compare-sample-sub');
 
         function updateCard() {
           titleEl.style.fontFamily = selFont.value;
           titleEl.style.fontWeight = selWeight.value;
           titleEl.style.fontStyle = btnItalic.classList.contains('active') ? 'italic' : 'normal';
           titleEl.style.textTransform = btnCaps.classList.contains('active') ? 'uppercase' : 'none';
-          subEl.style.fontFamily = selFont.value;
         }
 
         selFont.addEventListener('change', updateCard);
         selWeight.addEventListener('change', updateCard);
         btnItalic.addEventListener('click', () => { btnItalic.classList.toggle('active'); updateCard(); });
         btnCaps.addEventListener('click', () => { btnCaps.classList.toggle('active'); updateCard(); });
-        card.querySelector('.compare-use-btn').addEventListener('click', () => {
-          state.t1.font = selFont.value;
-          state.t1.weight = selWeight.value;
-          state.t1.style = btnItalic.classList.contains('active') ? 'italic' : 'normal';
-          state.t1.caps = btnCaps.classList.contains('active') ? 'uppercase' : 'none';
-          applyState('t1');
-          showLayout(currentLayout);
-          selectSlot('t1');
-        });
 
         updateCard();
         compareCols.appendChild(card);
@@ -1065,6 +1042,11 @@
     compareText.addEventListener('input', (e) => {
       const val = e.target.value || 'monrion studio';
       document.querySelectorAll('.compare-sample-title').forEach(el => { el.textContent = val; });
+    });
+
+    document.getElementById('compareSize').addEventListener('input', (e) => {
+      document.documentElement.style.setProperty('--cmp-size', e.target.value + 'px');
+      document.getElementById('compareSizeVal').textContent = e.target.value + 'px';
     });
 
     cols2Btn.addEventListener('click', () => {
